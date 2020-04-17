@@ -1,0 +1,149 @@
+#container
+{
+	display:flex;
+	width: 100%;
+	height: 100%;
+}
+#allvid{
+	background-color: grey;
+	margin:0px;
+	padding:0px;
+	position:absolute;
+	left:25%;
+	top:15%;
+	width: 800px;
+	height: 450px;
+	border:solid;
+}
+#allvid:hover #controle{
+	visibility: visible;
+	}
+
+#video{
+	width:100%;
+	height:100%;
+	margin: 0px;
+	padding: 0px;
+	min-width: 800px;
+	min-height: 450px;
+}
+
+#controle{
+	background-color: rgb(30,30, 66);
+	visibility: hidden;
+	margin-top: 0px;
+	position:relative;
+	height:40px;
+	margin-top: -44px;
+}
+
+#playPauseButton{
+	background-color:rgba(30,30,66,0.3);
+	height:30px;
+	width:30px;
+	border-radius: 15px;
+	border-color: #73008C;
+	margin: 2px;
+	cursor: pointer;
+}
+
+#videoTime{
+	color:white;
+	width:80px;
+}
+#sonButton{
+	background-color:rgba(30,30,66,0.3);
+	height:26px;
+	width:26px;
+	border-radius: 13px;
+	border-color: #73008C;
+	cursor: pointer;
+}
+
+#barreSon{
+	position: relative;
+	bottom: 2px;
+	width:60px;
+	-webkit-appearance: none;     
+	padding: 0;                   
+	height: 4px;
+	border-radius:1px;
+	font: inherit;                
+	outline: solid;
+	border-radius:2rem;
+	color: transparent;                  
+	opacity: .8;
+	background: linear-gradient(to right, grey,#8A00A8);            
+	box-sizing: content-box;       
+	cursor: pointer;
+}
+
+#barreSon::-webkit-slider-thumb{
+	-webkit-appearance:none;
+	background: rgb(30,30, 66);
+	border: 1px solid silver;
+	border-radius: 7px; 
+	height:14px;
+	width:14px;
+}
+#barreSon::-moz-range-thumb {
+	background: rgb(30,30, 66);
+	border: 1px solid silver;
+	border-radius: 7px; 
+	height:14px;
+	width:14px;
+}
+#barreSon::-ms-thumb {
+	background: rgb(30,30, 66);
+	border: 1px solid silver;
+	border-radius: 7px; 
+	height:14px;
+	width:14px;
+}
+
+#fullScreenButton{
+	position: absolute;
+	right:6px;
+	background-color:rgba(30,30,66,0.3);
+	height:30px;
+	width:30px;
+	
+	border:none;
+	cursor: pointer;
+}
+#fullScreenButton:hover i{
+font-size:1.3em;
+}
+
+#bleu{
+	width: 100%;
+	height: 4px;
+	background-color: rgb(30,30, 66);
+}
+#barreProgression{
+	width:98%;
+	height:3px;
+	margin-right: : 1%;
+	margin-left: 1%;
+	background-color: silver;
+	border-radius: 1px;
+	cursor: pointer;
+}
+#progression{
+	height:3px;
+	width: 0%;
+	background-color: #BF0EE6;
+	border-radius: 1px;
+	z-index: 1;
+}
+
+.rouge{background-color: red;}
+
+#container:-webkit-full-screen, .my-container:-moz-full-screen #controle{
+	background-color: rgb(30,30, 66);
+	margin-top: 0px;
+	visibility: hidden;
+	position:relative;
+	height:40px;
+	margin-top: -44px;
+}
