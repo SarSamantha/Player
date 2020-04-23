@@ -17,8 +17,8 @@ $(window).on('load', timer);
 $('video').on('timeupdate',timer);
 $('#barreSon').on('input', volume);
 $('#sonButton').click(mute);
-$(document).mousemove(disparitionSouris);
-$("#allvid").mousemove(apparitionSouris);
+$(document).mousemove(disparitionControle);
+$("#allvid").mousemove(apparitionControle);
 $('#fullScreenButton').click(fullScreen);
 
 
@@ -145,7 +145,7 @@ function mute(){
 }
 
 //disparition barre de défilement
-function disparitionSouris(e){
+function disparitionControle(e){
 	let Xcursor = e.pageX;
 let Ycursor = e.pageY;
 let XscreenLeft = $('#allvid').offset().left; 
@@ -164,7 +164,7 @@ else
 	}
 }
 //apparition barre de défilement
-function apparitionSouris(){
+function apparitionControle(){
 	clearTimeout(window.cacher);
 		$('#controle').css('visibility','visible');
 		$('#allvid').css('cursor','default');
