@@ -1,45 +1,30 @@
-body{
+body{               
 	width:100vw;
 	height: 100vh;
 }
 #container
 {
-	position:relative;
 	display:flex;
-	width: 100%;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
 }
 #allvid{
 	background-color: black;
-	position:absolute;
 
 }
 #allvid:hover #controle{
 	visibility: visible;
 }
-#video{	
-	width:100%;
-	height:100%;
-	z-index:-1;
-}
+
 
 #controle{
-	background-color: rgb(30,30, 66);
 	visibility: hidden;
-	margin-top: 0px;
-	position:relative;
 	height:40px;
-	margin-top: -44px;
-	min-width: 250px;
+	min-width: 50px;
 }
 
 #playPauseButton{
-	position:relative;
 	left:4px;
 	top: 6px;
-	background-color:rgba(30,30,66,0.3);
+	background-color:rgba(30,30,30,0.3);
 	height:27px;
 	width:27px;
 	border-radius: 15px;
@@ -49,13 +34,14 @@ body{
 }
 
 #videoTime{
-	position:relative;
 	top: 6px;
 	color:white;
 	width:80px;
-}
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size:0.7rem;
+}	
 #sonButton{
-	position:relative;
 	top: 6px;
 	background-color:rgba(30,30,66,0.3);
 	height:26px;
@@ -66,7 +52,6 @@ body{
 }
 
 #barreSon{
-	position: relative;
 	top: 3px;
 	width:60px;
 	-webkit-appearance: none;     
@@ -107,7 +92,6 @@ body{
 }
 
 #fullScreenButton{
-	position: absolute;
 	top: 13px;
 	right:6px;
 	background-color:rgba(30,30,66,0.3);
@@ -116,57 +100,53 @@ body{
 	border:none;
 	cursor: pointer;
 }
-#deplacement{
-position:absolute;
-bottom: 9px;
-right: 35px;
-background-color:rgba(30,30,66,0.3);
-border:none;
-}
-#resize{
-position:absolute;
-bottom: 9px;
-right: 55px;
-background-color:rgba(30,30,66,0.3);
-border:none;	
-}
 #fullScreenButton:hover i{
 font-size:1.3em;
 }
 
-#bleu{
-	width: 100%;
-	height: 4px;
-	background-color: rgb(30,30, 66);
-}
 #barreProgression{
-	position:absolute;
-	flex-direction: row;
 	width:96%;
 	height:3px;
-	margin-right: : 2%;
+	margin-right: 2%;
 	margin-left: 2%;
 	background-color: silver;
 	border-radius: 1px;
 	cursor: pointer;
 }
+
 #progression{
-	position:absolute;
-	top:0px;
 	height:3px;
 	width: 0%;
-	background-color: #BF0EE6;
 	border-radius: 1px 0px 0px 1px;
 	z-index: 1;
 }
 
-.rouge{background-color: red;}
-
-#container:-webkit-full-screen, .my-container:-moz-full-screen #controle{
-	background-color: rgb(30,30, 66);
-	margin-top: 0px;
-	visibility: hidden;
-	position:relative;
-	height:40px;
-	margin-bottom: 0px;
+#iconPlayPause{
+	color:white;
+	padding:5%;
 }
+
+#sonIcon{
+	font-size: 15px;
+	color:white;
+}
+#fullScreenIcon{
+	color:white;
+}
+
+#fullScreenButtonUnder
+{
+	top:6px;
+	right: 6px;
+	background-color:transparent;
+	visibility:hidden;
+	height:25px;
+	width:25px;
+	border:none;
+	cursor:pointer;
+}
+
+#fullScreenIconUnder{
+	color:white;
+}
+
