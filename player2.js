@@ -432,5 +432,5 @@ fullScreen()
 }
 
 
-const lecteur = new Lecteur({lienVideo:"Drumee final 2.0.mp4"});
+const lecteur = new Lecteur({lienVideo:"myVideo.mp4"});
 lecteur.init();
