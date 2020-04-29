@@ -1,7 +1,7 @@
 class Lecteur{
 	constructor(option){
-		this.parent = option.parent;
-		this.position = option.position || "relative";
+		this.parent = option.parent || 'body';
+		this.position = option.position || "absolute";
 		this.width = option.width || "100%";
 		this.height = option.height || "100%";
 		this.top = option.top || "0px";
@@ -20,12 +20,7 @@ container.style.width= this.width; //WIDTH
 container.style.height= this.height; //HEIGHT
 container.style.top=this.top; //TOP
 container.style.left=this.left; //LEFT
-if(this.parent){
-	document.getElementById(this.parent).appendChild(container); //PARENT DANS 'PARENT'
-}
-else{
-	document.querySelector('body').appendChild(container);
-}
+document.querySelector(this.parent).appendChild(container);
 
 let allvid = document.createElement('div'); 
 allvid.setAttribute("id","allvid");
@@ -66,6 +61,14 @@ progression.style.position ="absolute";
 progression.style.top="0px";
 progression.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
 document.getElementById('barreProgression').appendChild(progression);
+
+let ballProgress = document.createElement('div');
+ballProgress.setAttribute("id","ballProgress");
+ballProgress.style.position ="absolute";
+ballProgress.style.top="-3px";
+ballProgress.style.right="-4px";
+ballProgress.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
+document.getElementById('progression').appendChild(ballProgress);
 
 let buttons = document.createElement('div');
 buttons.setAttribute("id","buttons");
@@ -134,6 +137,7 @@ const self = this;
 window.addEventListener('load', function(){
 			self.resizeVideo();
 			self.timer();
+			window.appuyer=false;
 		});
 window.addEventListener('resize',function(){
 			self.resizeVideo();
@@ -183,16 +187,32 @@ fullScreenButton.addEventListener('click',function(){
 fullScreenButtonUnder.addEventListener('click',function(){
 			self.fullScreen();
 		});
+
+barreProgression.addEventListener('mousedown', function(){
+			window.appuyer=true;
+			document.addEventListener('mousemove', function(e){
+				self.drag(e);
+			});	
+		});
+
+document.addEventListener('mouseup', function(){
+			if(window.appuyer = true){
+				window.appuyer = false;
+			}
+		});
 	}
 
 	resizeVideo(){
 	let allvid=document.getElementById('allvid');
-	let video=document.getElementById('video'); 
+	let video=document.getElementById('video');
+	let container = document.getElementById('container');
 	let videoLargeur = video.getBoundingClientRect().width;
  	let videoHauteur = video.getBoundingClientRect().height;
- 	let container = document.getElementById('container');
  	let fenetreHauteur = container.getBoundingClientRect().height;
  	let fenetreLargeur = container.getBoundingClientRect().width;
+ 	console.log("videoX: "+videoLargeur+"   videoY: "+videoHauteur);
+ 	console.log("fenetreX: "+fenetreLargeur+"   fenetreY: "+fenetreHauteur);
+
  	let proportionY = fenetreHauteur/videoHauteur;
  	let proportionX = fenetreLargeur/videoLargeur;
  	if(videoLargeur>fenetreLargeur && videoHauteur>fenetreHauteur){ 
@@ -251,14 +271,34 @@ clickOnBar(e){
 	let video=document.getElementById('video');
 	let barreProgression=document.getElementById('barreProgression');
 	let progression=document.getElementById('progression');
-		let positionXLeftBarre = barreProgression.getBoundingClientRect().left; //position bord gauche barre progression
-		let positionXCursor = e.pageX; // position curseur dans la page
-		let cursorOnBarre= positionXCursor - positionXLeftBarre; // position X curseur par rapport au bord gauche de la barre
-		let tailleBarre= barreProgression.offsetWidth; // taille complete de la barre
-		let percent = (cursorOnBarre*100)/tailleBarre; //pourcentage de l'endroit ou le curseur se trouve
-		let tempsVideo= (percent*video.duration)/100; // pourcentage du temps de la video par rapport au curseur
-		video.currentTime = tempsVideo; //placement au bon moment dans la video
-		progression.style.width = percent +"%";// placement de la barre de progression par rapport au pourcentage
+	let positionXLeftBarre = barreProgression.getBoundingClientRect().left; //position bord gauche barre progression
+	let positionXCursor = e.pageX; // position curseur dans la page
+	let cursorOnBarre= positionXCursor - positionXLeftBarre; // position X curseur par rapport au bord gauche de la barre
+	let tailleBarre= barreProgression.offsetWidth; // taille complete de la barre
+	let percent = (cursorOnBarre*100)/tailleBarre; //pourcentage de l'endroit ou le curseur se trouve
+	let tempsVideo= (percent*video.duration)/100; // pourcentage du temps de la video par rapport au curseur
+	video.currentTime = tempsVideo; //placement au bon moment dans la video
+	progression.style.width = percent +"%";// placement de la barre de progression par rapport au pourcentage
+}
+
+drag(e){
+	let video = document.getElementById("video");
+	let barreProgression=document.getElementById('barreProgression');
+	let progression=document.getElementById('progression');
+	let positionXLeftBarre = barreProgression.getBoundingClientRect().left; 
+	let positionXCursor = e.pageX; 
+	let cursorOnBarre= positionXCursor - positionXLeftBarre; 
+	let tailleBarre= barreProgression.offsetWidth;
+	let percent = (cursorOnBarre*100)/tailleBarre; 
+	let tempsVideo= (percent*video.duration)/100; 
+	if(window.appuyer){
+		video.currentTime = tempsVideo;
+		progression.style.width = percent +"%";
+		if(positionXCursor>positionXLeftBarre+tailleBarre)
+		{
+			progression.style.width = "100%";
+		}
+	}
 }
 	
 timer(){
@@ -430,7 +470,6 @@ fullScreen()
 		}
 	}
 }
-
 
 const lecteur = new Lecteur({lienVideo:"myVideo.mp4"});
 lecteur.init();
