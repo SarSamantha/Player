@@ -213,17 +213,27 @@ videoSize(){
  	let containerLargeur = container.getBoundingClientRect().width;
  	let proportionY = containerHauteur/videoHauteur;
  	let proportionX = containerLargeur/videoLargeur; 	
- 	if(videoLargeur>containerLargeur && videoHauteur<=containerHauteur) {
+ 	 	if(videoLargeur>containerLargeur && videoHauteur<=containerHauteur) {
  		videoHauteur = videoHauteur*proportionX;
  		videoLargeur = videoLargeur*proportionX;
- 	}
+  	}
  	else if(videoLargeur<=containerLargeur && videoHauteur>containerHauteur)
  	{
  		videoHauteur = videoHauteur*proportionY;
  		videoLargeur = videoLargeur*proportionY;
  	}
  	else{
- 		if(containerLargeur<containerHauteur){
+ 		if(containerHauteur==containerLargeur){
+ 			if(videoLargeur>videoHauteur){
+ 			videoHauteur = videoHauteur*proportionX;
+ 			videoLargeur = videoLargeur*proportionX;
+ 			}
+ 			else{
+ 			videoHauteur = videoHauteur*proportionY;
+ 			videoLargeur = videoLargeur*proportionY;
+ 			}
+ 		}
+ 		else if(containerLargeur<containerHauteur){
  			videoHauteur = videoHauteur*proportionX;
  			videoLargeur = videoLargeur*proportionX;
  		}
@@ -231,8 +241,9 @@ videoSize(){
  			videoHauteur = videoHauteur*proportionY;
  			videoLargeur = videoLargeur*proportionY;
  		}
- 	}
- 	
+ 	} 
+
+
 	allvid.style.width = videoLargeur + 'px';
 	allvid.style.height = videoHauteur +'px';
 }
@@ -365,7 +376,6 @@ niveauVolume(){
 	let video= document.getElementById('video');
 	let barreSon= document.getElementById('barreSon');
 	let niveauSon = barreSon.value;
-	console.log(niveauSon);
 	video.volume = niveauSon/100;
 }
 
@@ -396,7 +406,7 @@ let XscreenLeft = allvid.getBoundingClientRect().left;
 let XscreenRight = XscreenLeft + allvid.getBoundingClientRect().width;
 let YscreenTop = allvid.getBoundingClientRect().top;
 let YscreenBottom = YscreenTop + allvid.getBoundingClientRect().height;
-if((allvid.getBoundingClientRect().width<250) && ((Xcursor>XscreenLeft && Xcursor<XscreenRight) && (Ycursor>YscreenTop && Ycursor<YscreenBottom)))
+if((allvid.getBoundingClientRect().width<=215) && ((Xcursor>XscreenLeft && Xcursor<XscreenRight) && (Ycursor>YscreenTop && Ycursor<YscreenBottom)))
 	{
 		controle.style.visibility="hidden";
 		fullScreenButtonUnder.style.visibility="visible";
