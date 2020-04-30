@@ -1,7 +1,7 @@
 class Lecteur{
 	constructor(option){
 		this.parent = option.parent || 'body';
-		this.position = option.position || "absolute";
+		this.position = option.position || "relative";
 		this.width = option.width || "100%";
 		this.height = option.height || "100%";
 		this.top = option.top || "0px";
@@ -12,211 +12,218 @@ class Lecteur{
 		this.lienVideo = option.lienVideo;
 	}
 
-	init(){
-let container = document.createElement('div'); 
-container.setAttribute("id","container");
-container.style.position = this.position; //POSITION
-container.style.width= this.width; //WIDTH
-container.style.height= this.height; //HEIGHT
-container.style.top=this.top; //TOP
-container.style.left=this.left; //LEFT
-document.querySelector(this.parent).appendChild(container);
+init(){
+	let container = document.createElement('div'); 
+	container.setAttribute("id","container");
+	container.style.position = this.position; //POSITION
+	container.style.width= this.width; //WIDTH
+	container.style.height= this.height; //HEIGHT
+	container.style.top=this.top; //TOP
+	container.style.left=this.left; //LEFT
+	document.querySelector(this.parent).appendChild(container);
 
-let allvid = document.createElement('div'); 
-allvid.setAttribute("id","allvid");
-allvid.style.position ="absolute";
-document.getElementById('container').appendChild(allvid);
+	let allvid = document.createElement('div'); 
+	allvid.setAttribute("id","allvid");
+	allvid.style.position ="absolute";
+	document.getElementById('container').appendChild(allvid);
 
-let video = document.createElement('video');
-video.setAttribute("id","video");
-video.src = this.lienVideo; //LIEN
-video.style.height="100%";
-video.style.width="100%";
-video.style.volume=this.volume; //VOLUME
-document.getElementById('allvid').appendChild(video);
+	let video = document.createElement('video');
+	video.setAttribute("id","video");
+	video.src = this.lienVideo; //LIEN
+	video.style.height="100%";
+	video.style.width="100%";
+	video.style.volume=this.volume; //VOLUME
+	document.getElementById('allvid').appendChild(video);
 
-let controle = document.createElement('div');
-controle.setAttribute("id","controle");
-controle.style.backgroundColor=this.controleColor; //COLOR CONTROLE
-controle.style.position="relative";
-document.getElementById('allvid').appendChild(controle);
-controle.style.marginTop="-"+(controle.getBoundingClientRect().height + 4)+ "px";
+	let controle = document.createElement('div');
+	controle.setAttribute("id","controle");
+	controle.style.backgroundColor=this.controleColor; //COLOR CONTROLE
+	controle.style.position="relative";
+	document.getElementById('allvid').appendChild(controle);
+	controle.style.marginTop="-"+(controle.getBoundingClientRect().height + 4)+ "px";
 
-let bleu =document.createElement('div');
-bleu.setAttribute("id","bleu");
-bleu.style.width="100%";
-bleu.style.height="4px";
-bleu.style.backgroundColor=this.controleColor; // COLOR CONTROLE
-document.getElementById('controle').appendChild(bleu);
+	let bleu =document.createElement('div');
+	bleu.setAttribute("id","bleu");
+	bleu.style.width="100%";
+	bleu.style.height="4px";
+	bleu.style.backgroundColor=this.controleColor; // COLOR CONTROLE
+	document.getElementById('controle').appendChild(bleu);
 
-let barreProgression = document.createElement('div');
-barreProgression.setAttribute("id","barreProgression");
-barreProgression.style.position = "absolute";
-barreProgression.style.flexDirection="row";
-document.getElementById('controle').appendChild(barreProgression);
+	let barreProgression = document.createElement('div');
+	barreProgression.setAttribute("id","barreProgression");
+	barreProgression.style.position = "absolute";
+	barreProgression.style.flexDirection="row";
+	document.getElementById('controle').appendChild(barreProgression);
 
-let progression = document.createElement('div');
-progression.setAttribute("id","progression");
-progression.style.position ="absolute";
-progression.style.top="0px";
-progression.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
-document.getElementById('barreProgression').appendChild(progression);
+	let progression = document.createElement('div');
+	progression.setAttribute("id","progression");
+	progression.style.position ="absolute";
+	progression.style.top="0px";
+	progression.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
+	document.getElementById('barreProgression').appendChild(progression);
 
-let ballProgress = document.createElement('div');
-ballProgress.setAttribute("id","ballProgress");
-ballProgress.style.position ="absolute";
-ballProgress.style.top="-3px";
-ballProgress.style.right="-4px";
-ballProgress.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
-document.getElementById('progression').appendChild(ballProgress);
+	let ballProgress = document.createElement('div');
+	ballProgress.setAttribute("id","ballProgress");
+	ballProgress.style.position ="absolute";
+	ballProgress.style.top="-3px";
+	ballProgress.style.right="-4px";
+	ballProgress.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
+	document.getElementById('progression').appendChild(ballProgress);
 
-let buttons = document.createElement('div');
-buttons.setAttribute("id","buttons");
-document.getElementById('controle').appendChild(buttons);
+	let buttons = document.createElement('div');
+	buttons.setAttribute("id","buttons");
+	document.getElementById('controle').appendChild(buttons);
 
-let playPauseButton = document.createElement('button');
-playPauseButton.setAttribute("id","playPauseButton");
-playPauseButton.style.position="relative";
-document.getElementById('buttons').appendChild(playPauseButton);
+	let playPauseButton = document.createElement('button');
+	playPauseButton.setAttribute("id","playPauseButton");
+	playPauseButton.style.position="relative";
+	document.getElementById('buttons').appendChild(playPauseButton);
 
-let iconPlayPause = document.createElement('i');
-iconPlayPause.setAttribute("id","iconPlayPause");
-iconPlayPause.classList.add("fa","fa-play");
-document.getElementById('playPauseButton').appendChild(iconPlayPause);
+	let iconPlayPause = document.createElement('i');
+	iconPlayPause.setAttribute("id","iconPlayPause");
+	iconPlayPause.classList.add("fa","fa-play");
+	document.getElementById('playPauseButton').appendChild(iconPlayPause);
 
-let videoTime = document.createElement('span');
-videoTime.setAttribute("id","videoTime");
-videoTime.style.position="relative";
-document.getElementById('buttons').appendChild(videoTime);
+	let videoTime = document.createElement('span');
+	videoTime.setAttribute("id","videoTime");
+	videoTime.style.position="relative";
+	document.getElementById('buttons').appendChild(videoTime);
 
-let sonButton = document.createElement('button');
-sonButton.setAttribute("id","sonButton");
-sonButton.classList.add("on");
-sonButton.style.position="relative";
-document.getElementById('buttons').appendChild(sonButton);
+	let sonButton = document.createElement('button');
+	sonButton.setAttribute("id","sonButton");
+	sonButton.classList.add("on");
+	sonButton.style.position="relative";
+	document.getElementById('buttons').appendChild(sonButton);
 
-let sonIcon = document.createElement('i');
-sonIcon.setAttribute("id","sonIcon");
-sonIcon.classList.add("fa","fa-volume-off");
-document.getElementById('sonButton').appendChild(sonIcon);
+	let sonIcon = document.createElement('i');
+	sonIcon.setAttribute("id","sonIcon");
+	sonIcon.classList.add("fa","fa-volume-off");
+	document.getElementById('sonButton').appendChild(sonIcon);
 
-let barreSon = document.createElement('input');
-barreSon.setAttribute("id","barreSon");
-barreSon.setAttribute("type","range");
-barreSon.setAttribute("min","0");
-barreSon.setAttribute("max","100");
-barreSon.setAttribute("value","20");
-barreSon.setAttribute("step","1");
-barreSon.style.position="relative";
-document.getElementById('buttons').appendChild(barreSon);
+	let barreSon = document.createElement('input');
+	barreSon.setAttribute("id","barreSon");
+	barreSon.setAttribute("type","range");
+	barreSon.setAttribute("min","0");
+	barreSon.setAttribute("max","100");
+	barreSon.setAttribute("value","20");
+	barreSon.setAttribute("step","1");
+	barreSon.style.position="relative";
+	document.getElementById('buttons').appendChild(barreSon);
 
-let fullScreenButton = document.createElement('button');
-fullScreenButton.setAttribute("id","fullScreenButton");
-fullScreenButton.classList.add("close");
-fullScreenButton.style.position="absolute";
-document.getElementById('buttons').appendChild(fullScreenButton);
+	let fullScreenButton = document.createElement('button');
+	fullScreenButton.setAttribute("id","fullScreenButton");
+	fullScreenButton.classList.add("close");
+	fullScreenButton.style.position="absolute";
+	document.getElementById('buttons').appendChild(fullScreenButton);
 
-let fullScreenIcon = document.createElement('i');
-fullScreenIcon.setAttribute("id","fullScreenIcon");
-fullScreenIcon.classList.add("fa","fa-expand");
-fullScreenIcon.style.color="white";
-document.getElementById('fullScreenButton').appendChild(fullScreenIcon);
+	let fullScreenIcon = document.createElement('i');
+	fullScreenIcon.setAttribute("id","fullScreenIcon");
+	fullScreenIcon.classList.add("fa","fa-expand");
+	fullScreenIcon.style.color="white";
+	document.getElementById('fullScreenButton').appendChild(fullScreenIcon);
 
-let fullScreenButtonUnder = document.createElement('button');
-fullScreenButtonUnder.setAttribute("id","fullScreenButtonUnder");
-fullScreenButtonUnder.classList.add("close");
-fullScreenButtonUnder.style.position="absolute";
-document.getElementById('allvid').appendChild(fullScreenButtonUnder);
+	let fullScreenButtonUnder = document.createElement('button');
+	fullScreenButtonUnder.setAttribute("id","fullScreenButtonUnder");
+	fullScreenButtonUnder.classList.add("close");
+	fullScreenButtonUnder.style.position="absolute";
+	document.getElementById('allvid').appendChild(fullScreenButtonUnder);
 
-let fullScreenIconUnder = document.createElement('i');
-fullScreenIconUnder.setAttribute("id","fullScreenIconUnder");
-fullScreenIconUnder.classList.add("fa","fa-expand");
-document.getElementById('fullScreenButtonUnder').appendChild(fullScreenIconUnder);
+	let fullScreenIconUnder = document.createElement('i');
+	fullScreenIconUnder.setAttribute("id","fullScreenIconUnder");
+	fullScreenIconUnder.classList.add("fa","fa-expand");
+	document.getElementById('fullScreenButtonUnder').appendChild(fullScreenIconUnder);
 
-const self = this;
-window.addEventListener('load', function(){
-			self.resizeVideo();
-			self.timer();
-			window.appuyer=false;
-		});
-window.addEventListener('resize',function(){
-			self.resizeVideo();
-		});
+	const self = this;
+	window.OkForResize = false;
+	window.addEventListener('load', function(){
+				self.openSizeVideo();
+				self.timer();
+				window.appuyer=false;
+			});
+	window.addEventListener('resize',function(){
+				self.resizeVideo();
+			});
 
-playPauseButton.addEventListener('click',function(){
-			self.playAndPause();
-		});
-video.addEventListener('click',function(){
-			self.playAndPause();
-		});
-document.addEventListener('keyup',function(e){
-			if(e.which == 32)
-			{
+	playPauseButton.addEventListener('click',function(){
 				self.playAndPause();
-			}
-		});
-video.addEventListener('timeupdate',function(){
-			self.timeFlow();
-			self.timer();
-		});
+			});
+	video.addEventListener('click',function(){
+				self.playAndPause();
+			});
+	document.addEventListener('keyup',function(e){
+				if(e.which == 32)
+				{
+					self.playAndPause();
+				}
+			});
+	video.addEventListener('timeupdate',function(){
+				self.timeFlow();
+				self.timer();
+			});
 
-barreProgression.addEventListener('click',function(e){
-			self.clickOnBar(e);
-		});
+	barreProgression.addEventListener('click',function(e){
+				self.clickOnBar(e);
+			});
 
-barreSon.addEventListener('input', function(){
-			self.niveauVolume();
-		});
+	barreSon.addEventListener('input', function(){
+				self.niveauVolume();
+			});
 
-sonButton.addEventListener('click',function(){
-			self.mute();
-		});
+	sonButton.addEventListener('click',function(){
+				self.mute();
+			});
 
-document.addEventListener('mousemove',function(e){
-			self.disparitionControle(e);
-		});
+	document.addEventListener('mousemove',function(e){
+				self.disparitionControle(e);
+			});
 
-allvid.addEventListener('mousemove',function(){
-			self.apparitionControle();
-		});
+	allvid.addEventListener('mousemove',function(){
+				self.apparitionControle();
+			});
 
-fullScreenButton.addEventListener('click',function(){
-			self.fullScreen();
-		});
+	fullScreenButton.addEventListener('click',function(){
+				self.fullScreen();
+			});
 
-fullScreenButtonUnder.addEventListener('click',function(){
-			self.fullScreen();
-		});
+	fullScreenButtonUnder.addEventListener('click',function(){
+				self.fullScreen();
+			});
 
-barreProgression.addEventListener('mousedown', function(){
-			window.appuyer=true;
-			document.addEventListener('mousemove', function(e){
-				self.drag(e);
-			});	
-		});
+	barreProgression.addEventListener('mousedown', function(){
+				window.appuyer=true;
+				document.addEventListener('mousemove', function(e){
+					self.drag(e);
+				});	
+			});
 
-document.addEventListener('mouseup', function(){
-			if(window.appuyer = true){
-				window.appuyer = false;
-			}
-		});
-	}
+	document.addEventListener('mouseup', function(){
+				if(window.appuyer = true){
+					window.appuyer = false;
+				}
+			});
+}
 
-	resizeVideo(){
-	let allvid=document.getElementById('allvid');
+videoSize(){
 	let video=document.getElementById('video');
-	let container = document.getElementById('container');
 	let videoLargeur = video.getBoundingClientRect().width;
  	let videoHauteur = video.getBoundingClientRect().height;
- 	let fenetreHauteur = container.getBoundingClientRect().height;
- 	let fenetreLargeur = container.getBoundingClientRect().width;
- 	console.log("videoX: "+videoLargeur+"   videoY: "+videoHauteur);
- 	console.log("fenetreX: "+fenetreLargeur+"   fenetreY: "+fenetreHauteur);
-
- 	let proportionY = fenetreHauteur/videoHauteur;
- 	let proportionX = fenetreLargeur/videoLargeur;
- 	if(videoLargeur>fenetreLargeur && videoHauteur>fenetreHauteur){ 
- 		if(fenetreLargeur>fenetreHauteur){
+ 	let allvid=document.getElementById('allvid');
+ 	let container = document.getElementById('container');
+ 	let containerHauteur = container.getBoundingClientRect().height;
+ 	let containerLargeur = container.getBoundingClientRect().width;
+ 	let proportionY = containerHauteur/videoHauteur;
+ 	let proportionX = containerLargeur/videoLargeur; 	
+ 	if(videoLargeur>containerLargeur && videoHauteur<=containerHauteur) {
+ 		videoHauteur = videoHauteur*proportionX;
+ 		videoLargeur = videoLargeur*proportionX;
+ 	}
+ 	else if(videoLargeur<=containerLargeur && videoHauteur>containerHauteur)
+ 	{
+ 		videoHauteur = videoHauteur*proportionY;
+ 		videoLargeur = videoLargeur*proportionY;
+ 	}
+ 	else{
+ 		if(containerLargeur<containerHauteur){
  			videoHauteur = videoHauteur*proportionX;
  			videoLargeur = videoLargeur*proportionX;
  		}
@@ -225,17 +232,22 @@ document.addEventListener('mouseup', function(){
  			videoLargeur = videoLargeur*proportionY;
  		}
  	}
- 	else if(videoLargeur>fenetreLargeur && videoHauteur<fenetreHauteur) {
- 		videoHauteur = videoHauteur*proportionX;
- 		videoLargeur = videoLargeur*proportionX;
- 	}
- 	else 
- 	{
- 		videoHauteur = videoHauteur*proportionY;
- 		videoLargeur = videoLargeur*proportionY;
- 	}	
+ 	
 	allvid.style.width = videoLargeur + 'px';
 	allvid.style.height = videoHauteur +'px';
+}
+
+openSizeVideo(){
+	const self=this;
+	self.videoSize();
+	window.OkForResize=true;
+}
+
+resizeVideo(){	
+	const self=this;
+	if(window.OkForResize){
+		self.videoSize();
+	}
 }
 
 playAndPause(){
@@ -391,7 +403,7 @@ if((allvid.getBoundingClientRect().width<250) && ((Xcursor>XscreenLeft && Xcurso
 		window.cache = setTimeout(function(){
 			fullScreenButtonUnder.style.visibility='hidden'}, 3500);
 	}
-else if((Xcursor>XscreenLeft && Xcursor<XscreenRight) && (Ycursor>YscreenTop && Ycursor<YscreenBottom)) //hover
+else if((Xcursor>XscreenLeft && Xcursor<XscreenRight) && (Ycursor>YscreenTop && Ycursor<YscreenBottom)) 
 	{
 			controle.style.visibility = 'visible';
 			window.cacher = setTimeout(function(){
@@ -470,6 +482,7 @@ fullScreen()
 		}
 	}
 }
+
 
 const lecteur = new Lecteur({lienVideo:"myVideo.mp4"});
 lecteur.init();

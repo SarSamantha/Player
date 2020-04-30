@@ -10,9 +10,12 @@ body{
 
 #allvid{
 	background-color: black;
-
+	
 }
-
+#video{
+	width: 100%;
+	height: 100%;
+}
 #allvid:hover #controle{
 	visibility: visible;
 }
