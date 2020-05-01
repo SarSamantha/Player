@@ -1,5 +1,6 @@
 class Lecteur{
 	constructor(option){
+		this.name = option.name || "";
 		this.parent = option.parent || 'body';
 		this.position = option.position || "relative";
 		this.width = option.width || "100%";
@@ -14,7 +15,8 @@ class Lecteur{
 
 init(){
 	let container = document.createElement('div'); 
-	container.setAttribute("id","container");
+	container.setAttribute("id", "container"+this.name);
+	container.classList.add("containerClass");
 	container.style.position = this.position; //POSITION
 	container.style.width= this.width; //WIDTH
 	container.style.height= this.height; //HEIGHT
@@ -23,115 +25,130 @@ init(){
 	document.querySelector(this.parent).appendChild(container);
 
 	let allvid = document.createElement('div'); 
-	allvid.setAttribute("id","allvid");
+	allvid.setAttribute("id","allvid"+this.name);
+	allvid.classList.add("allvidClass");
 	allvid.style.position ="absolute";
-	document.getElementById('container').appendChild(allvid);
+	document.getElementById('container'+this.name).appendChild(allvid);
 
 	let video = document.createElement('video');
-	video.setAttribute("id","video");
+	video.setAttribute("id","video"+this.name);
 	video.src = this.lienVideo; //LIEN
 	video.style.height="100%";
 	video.style.width="100%";
 	video.style.volume=this.volume; //VOLUME
-	document.getElementById('allvid').appendChild(video);
+	document.getElementById('allvid'+this.name).appendChild(video);
 
 	let controle = document.createElement('div');
-	controle.setAttribute("id","controle");
+	controle.setAttribute("id","controle"+this.name);
+	controle.classList.add("controleClass");
 	controle.style.backgroundColor=this.controleColor; //COLOR CONTROLE
 	controle.style.position="relative";
-	document.getElementById('allvid').appendChild(controle);
+	document.getElementById('allvid'+this.name).appendChild(controle);
 	controle.style.marginTop="-"+(controle.getBoundingClientRect().height + 4)+ "px";
 
 	let bleu =document.createElement('div');
-	bleu.setAttribute("id","bleu");
+	bleu.setAttribute("id","bleu"+this.name);
 	bleu.style.width="100%";
 	bleu.style.height="4px";
 	bleu.style.backgroundColor=this.controleColor; // COLOR CONTROLE
-	document.getElementById('controle').appendChild(bleu);
+	document.getElementById('controle'+this.name).appendChild(bleu);
 
 	let barreProgression = document.createElement('div');
-	barreProgression.setAttribute("id","barreProgression");
+	barreProgression.setAttribute("id","barreProgression"+this.name);
+	barreProgression.classList.add("barreProgressionClass");
 	barreProgression.style.position = "absolute";
 	barreProgression.style.flexDirection="row";
-	document.getElementById('controle').appendChild(barreProgression);
+	document.getElementById('controle'+this.name).appendChild(barreProgression);
 
 	let progression = document.createElement('div');
-	progression.setAttribute("id","progression");
+	progression.setAttribute("id","progression"+this.name);
+	progression.classList.add("progressionClass");
 	progression.style.position ="absolute";
 	progression.style.top="0px";
 	progression.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
-	document.getElementById('barreProgression').appendChild(progression);
+	document.getElementById('barreProgression'+this.name).appendChild(progression);
 
 	let ballProgress = document.createElement('div');
-	ballProgress.setAttribute("id","ballProgress");
+	ballProgress.setAttribute("id","ballProgress"+this.name);
+	ballProgress.classList.add("ballProgressClass");
 	ballProgress.style.position ="absolute";
 	ballProgress.style.top="-3px";
 	ballProgress.style.right="-4px";
 	ballProgress.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
-	document.getElementById('progression').appendChild(ballProgress);
+	document.getElementById('progression'+this.name).appendChild(ballProgress);
 
 	let buttons = document.createElement('div');
-	buttons.setAttribute("id","buttons");
-	document.getElementById('controle').appendChild(buttons);
+	buttons.setAttribute("id","buttons"+this.name);
+	document.getElementById('controle'+this.name).appendChild(buttons);
 
 	let playPauseButton = document.createElement('button');
-	playPauseButton.setAttribute("id","playPauseButton");
+	playPauseButton.setAttribute("id","playPauseButton"+this.name);
+	playPauseButton.classList.add("playPauseButtonClass");
 	playPauseButton.style.position="relative";
-	document.getElementById('buttons').appendChild(playPauseButton);
+	document.getElementById('buttons'+this.name).appendChild(playPauseButton);
 
 	let iconPlayPause = document.createElement('i');
-	iconPlayPause.setAttribute("id","iconPlayPause");
+	iconPlayPause.setAttribute("id","iconPlayPause"+this.name);
+	iconPlayPause.classList.add("iconPlayPauseClass");
 	iconPlayPause.classList.add("fa","fa-play");
-	document.getElementById('playPauseButton').appendChild(iconPlayPause);
+	document.getElementById('playPauseButton'+this.name).appendChild(iconPlayPause);
 
 	let videoTime = document.createElement('span');
-	videoTime.setAttribute("id","videoTime");
+	videoTime.setAttribute("id","videoTime"+this.name);
+	videoTime.classList.add("videoTimeClass");
 	videoTime.style.position="relative";
-	document.getElementById('buttons').appendChild(videoTime);
+	document.getElementById('buttons'+this.name).appendChild(videoTime);
 
 	let sonButton = document.createElement('button');
-	sonButton.setAttribute("id","sonButton");
+	sonButton.setAttribute("id","sonButton"+this.name);
+	sonButton.classList.add("sonButtonClass");
 	sonButton.classList.add("on");
 	sonButton.style.position="relative";
-	document.getElementById('buttons').appendChild(sonButton);
+	document.getElementById('buttons'+this.name).appendChild(sonButton);
 
 	let sonIcon = document.createElement('i');
-	sonIcon.setAttribute("id","sonIcon");
+	sonIcon.setAttribute("id","sonIcon"+this.name);
+	sonIcon.classList.add("sonIconClass");
 	sonIcon.classList.add("fa","fa-volume-off");
-	document.getElementById('sonButton').appendChild(sonIcon);
+	document.getElementById('sonButton'+this.name).appendChild(sonIcon);
 
 	let barreSon = document.createElement('input');
-	barreSon.setAttribute("id","barreSon");
+	barreSon.setAttribute("id","barreSon"+this.name);
+	barreSon.classList.add("barreSonClass");
 	barreSon.setAttribute("type","range");
 	barreSon.setAttribute("min","0");
 	barreSon.setAttribute("max","100");
 	barreSon.setAttribute("value","20");
 	barreSon.setAttribute("step","1");
 	barreSon.style.position="relative";
-	document.getElementById('buttons').appendChild(barreSon);
+	document.getElementById('buttons'+this.name).appendChild(barreSon);
 
 	let fullScreenButton = document.createElement('button');
-	fullScreenButton.setAttribute("id","fullScreenButton");
+	fullScreenButton.setAttribute("id","fullScreenButton"+this.name);
+	fullScreenButton.classList.add("fullScreenButtonClass");
 	fullScreenButton.classList.add("close");
 	fullScreenButton.style.position="absolute";
-	document.getElementById('buttons').appendChild(fullScreenButton);
+	document.getElementById('buttons'+this.name).appendChild(fullScreenButton);
 
 	let fullScreenIcon = document.createElement('i');
-	fullScreenIcon.setAttribute("id","fullScreenIcon");
+	fullScreenIcon.setAttribute("id","fullScreenIcon"+this.name);
+	fullScreenIcon.classList.add("fullScreenIconClass");
 	fullScreenIcon.classList.add("fa","fa-expand");
 	fullScreenIcon.style.color="white";
-	document.getElementById('fullScreenButton').appendChild(fullScreenIcon);
+	document.getElementById('fullScreenButton'+this.name).appendChild(fullScreenIcon);
 
 	let fullScreenButtonUnder = document.createElement('button');
-	fullScreenButtonUnder.setAttribute("id","fullScreenButtonUnder");
+	fullScreenButtonUnder.setAttribute("id","fullScreenButtonUnder"+this.name);
+	fullScreenButtonUnder.classList.add("fullScreenButtonUnderClass");
 	fullScreenButtonUnder.classList.add("close");
 	fullScreenButtonUnder.style.position="absolute";
-	document.getElementById('allvid').appendChild(fullScreenButtonUnder);
+	document.getElementById('allvid'+this.name).appendChild(fullScreenButtonUnder);
 
 	let fullScreenIconUnder = document.createElement('i');
-	fullScreenIconUnder.setAttribute("id","fullScreenIconUnder");
+	fullScreenIconUnder.setAttribute("id","fullScreenIconUnder"+this.name);
+	fullScreenIconUnder.classList.add("fullScreenIconUnderClass");
 	fullScreenIconUnder.classList.add("fa","fa-expand");
-	document.getElementById('fullScreenButtonUnder').appendChild(fullScreenIconUnder);
+	document.getElementById('fullScreenButtonUnder'+this.name).appendChild(fullScreenIconUnder);
 
 	const self = this;
 	window.OkForResize = false;
@@ -204,11 +221,11 @@ init(){
 }
 
 videoSize(){
-	let video=document.getElementById('video');
+	let video=document.getElementById('video'+this.name);
 	let videoLargeur = video.getBoundingClientRect().width;
  	let videoHauteur = video.getBoundingClientRect().height;
- 	let allvid=document.getElementById('allvid');
- 	let container = document.getElementById('container');
+ 	let allvid=document.getElementById('allvid'+this.name);
+ 	let container = document.getElementById('container'+this.name);
  	let containerHauteur = container.getBoundingClientRect().height;
  	let containerLargeur = container.getBoundingClientRect().width;
  	let proportionY = containerHauteur/videoHauteur;
@@ -262,8 +279,8 @@ resizeVideo(){
 }
 
 playAndPause(){
-	let video=document.getElementById('video');
-	let iconPlayPause=document.getElementById('iconPlayPause');
+	let video=document.getElementById('video'+this.name);
+	let iconPlayPause=document.getElementById('iconPlayPause'+this.name);
 	if(video.paused){
 		video.play(); 
 		iconPlayPause.classList.remove("fa","fa-play");
@@ -277,10 +294,10 @@ playAndPause(){
 }
 
 timeFlow(){
-	let video= document.getElementById('video');
-	let barreProgression= document.getElementById('barreProgression');
-	let progression= document.getElementById('progression');
-	let iconPlayPause=document.getElementById('iconPlayPause');
+	let video= document.getElementById('video'+this.name);
+	let barreProgression= document.getElementById('barreProgression'+this.name);
+	let progression= document.getElementById('progression'+this.name);
+	let iconPlayPause=document.getElementById('iconPlayPause'+this.name);
 	let timePercent = (video.currentTime*100)/video.duration;
 	progression.style.width = timePercent + "%";
 	if(progression.offsetWidth == barreProgression.offsetWidth)
@@ -291,9 +308,9 @@ timeFlow(){
 }
 
 clickOnBar(e){
-	let video=document.getElementById('video');
-	let barreProgression=document.getElementById('barreProgression');
-	let progression=document.getElementById('progression');
+	let video=document.getElementById('video'+this.name);
+	let barreProgression=document.getElementById('barreProgression'+this.name);
+	let progression=document.getElementById('progression'+this.name);
 	let positionXLeftBarre = barreProgression.getBoundingClientRect().left; //position bord gauche barre progression
 	let positionXCursor = e.pageX; // position curseur dans la page
 	let cursorOnBarre= positionXCursor - positionXLeftBarre; // position X curseur par rapport au bord gauche de la barre
@@ -305,9 +322,9 @@ clickOnBar(e){
 }
 
 drag(e){
-	let video = document.getElementById("video");
-	let barreProgression=document.getElementById('barreProgression');
-	let progression=document.getElementById('progression');
+	let video = document.getElementById("video"+this.name);
+	let barreProgression=document.getElementById('barreProgression'+this.name);
+	let progression=document.getElementById('progression'+this.name);
 	let positionXLeftBarre = barreProgression.getBoundingClientRect().left; 
 	let positionXCursor = e.pageX; 
 	let cursorOnBarre= positionXCursor - positionXLeftBarre; 
@@ -325,8 +342,8 @@ drag(e){
 }
 	
 timer(){
-	let video= document.getElementById('video');
-	let videoTime =document.getElementById("videoTime");
+	let video= document.getElementById('video'+this.name);
+	let videoTime =document.getElementById("videoTime"+this.name);
 	let durationHour = Math.floor(video.duration/3600);
 	if(durationHour<10){
 		durationHour = "0"+durationHour;
@@ -373,33 +390,35 @@ let duration;
 }
 
 niveauVolume(){
-	let video= document.getElementById('video');
-	let barreSon= document.getElementById('barreSon');
+	let video= document.getElementById('video'+this.name);
+	let barreSon= document.getElementById('barreSon'+this.name);
 	let niveauSon = barreSon.value;
 	video.volume = niveauSon/100;
 }
 
 mute(){
-	let video= document.getElementById('video');
-	let sonButton= document.getElementById('sonButton');
-	let sonIcon= document.getElementById('sonIcon');
-	if(sonButton.className === 'on'){ //si la classe de sonButton est on
+	let video= document.getElementById('video'+this.name);
+	let sonButton= document.getElementById('sonButton'+this.name);
+	let sonIcon= document.getElementById('sonIcon'+this.name);
+	if(sonButton.className === 'sonButtonClass on'){ //si la classe de sonButton est on
 			video.volume=0; //prop : Get the value of a property for the first element in the set of matched elements or set one or more properties for every matched element.
 			sonIcon.style.color ="red";
-			sonButton.className = "off";
+			sonButton.classList.remove("on");
+			sonButton.classList.add("off");
 		}
-		else if(sonButton.className === 'off'){
+		else if(sonButton.className === 'sonButtonClass off'){
 			let niveauSon = barreSon.value;
 			video.volume = niveauSon/100;
 			sonIcon.style.color ="white";
-			sonButton.className ="on";
+			sonButton.classList.remove("off");
+			sonButton.classList.add("on");
 		}
 }
 
 disparitionControle(e){
-let allvid= document.getElementById('allvid');
-let controle= document.getElementById('controle');
-let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder');
+let allvid= document.getElementById('allvid'+this.name);
+let controle= document.getElementById('controle'+this.name);
+let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
 let Xcursor = e.clientX;
 let Ycursor = e.clientY;
 let XscreenLeft = allvid.getBoundingClientRect().left; 
@@ -428,9 +447,9 @@ else
 }
 
 apparitionControle(){
-	let allvid= document.getElementById('allvid');
-	let controle= document.getElementById('controle');
-	let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder');
+	let allvid= document.getElementById('allvid'+this.name);
+	let controle= document.getElementById('controle'+this.name);
+	let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
 	clearTimeout(window.cacher);
 	clearTimeout(window.cache);
 	controle.style.visibility='visible'; 
@@ -439,10 +458,12 @@ apparitionControle(){
 
 fullScreen()
 	{
-		let allvid= document.getElementById('allvid');
-		let fullScreenButton= document.getElementById('fullScreenButton');
-		let fullScreenIcon= document.getElementById('fullScreenIcon');
-		if(fullScreenButton.className ==='close')
+		let allvid= document.getElementById('allvid'+this.name);
+		let fullScreenButton= document.getElementById('fullScreenButton'+this.name);
+		let fullScreenIcon= document.getElementById('fullScreenIcon'+this.name);
+		let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
+		let fullScreenIconUnder = document.getElementById('fullScreenIconUnder'+this.name);
+		if(fullScreenButton.className ==='fullScreenButtonClass close')
 		{
 			window.normalSize = allvid.getBoundingClientRect();
 			fullScreenIcon.classList.remove("fa","fa-expand");
@@ -466,7 +487,7 @@ fullScreen()
 				allvid.msRequestFullscreen();
 			}
 		}
-		else if(fullScreenButton.className ==='open'){
+		else if(fullScreenButton.className ==='fullScreenButtonClass open'){
 			allvid.style.width = window.normalSize.width + 'px';
 			allvid.style.height = window.normalSize.height + 'px';
 			fullScreenIcon.classList.remove("fa","fa-compress");
