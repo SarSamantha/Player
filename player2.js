@@ -9,6 +9,7 @@ class Lecteur{
 		this.left = option.left || "0px";
 		this.controleColor = option.controleColor || "rgb(30,30, 66)";
 		this.progressionColor = option.progressionColor ||"#BF0EE6";
+		this.buttonColor = option.buttonColor || "#73008C";
 		this.volume = option.volume || "20";
 		this.lienVideo = option.lienVideo;
 	}
@@ -85,6 +86,7 @@ init(){
 	playPauseButton.setAttribute("id","playPauseButton"+this.name);
 	playPauseButton.classList.add("playPauseButtonClass");
 	playPauseButton.style.position="relative";
+	playPauseButton.style.borderColor = this.buttonColor;
 	document.getElementById('buttons'+this.name).appendChild(playPauseButton);
 
 	let iconPlayPause = document.createElement('i');
@@ -101,9 +103,9 @@ init(){
 
 	let sonButton = document.createElement('button');
 	sonButton.setAttribute("id","sonButton"+this.name);
-	sonButton.classList.add("sonButtonClass");
-	sonButton.classList.add("on");
+	sonButton.classList.add("sonButtonClass", "on");
 	sonButton.style.position="relative";
+	sonButton.style.borderColor = this.buttonColor;
 	document.getElementById('buttons'+this.name).appendChild(sonButton);
 
 	let sonIcon = document.createElement('i');
@@ -121,6 +123,7 @@ init(){
 	barreSon.setAttribute("value","20");
 	barreSon.setAttribute("step","1");
 	barreSon.style.position="relative";
+	barreSon.style.background = "linear-gradient(to right, grey,"+this.buttonColor+")";
 	document.getElementById('buttons'+this.name).appendChild(barreSon);
 
 	let fullScreenButton = document.createElement('button');
@@ -221,51 +224,39 @@ init(){
 }
 
 videoSize(){
-	let video=document.getElementById('video'+this.name);
-	let videoLargeur = video.getBoundingClientRect().width;
- 	let videoHauteur = video.getBoundingClientRect().height;
  	let allvid=document.getElementById('allvid'+this.name);
  	let container = document.getElementById('container'+this.name);
  	let containerHauteur = container.getBoundingClientRect().height;
  	let containerLargeur = container.getBoundingClientRect().width;
- 	let proportionY = containerHauteur/videoHauteur;
- 	let proportionX = containerLargeur/videoLargeur; 	
- 	 	if(videoLargeur>containerLargeur && videoHauteur<=containerHauteur) {
- 		videoHauteur = videoHauteur*proportionX;
- 		videoLargeur = videoLargeur*proportionX;
-  	}
- 	else if(videoLargeur<=containerLargeur && videoHauteur>containerHauteur)
- 	{
- 		videoHauteur = videoHauteur*proportionY;
- 		videoLargeur = videoLargeur*proportionY;
+ 	let videoLargeur = containerLargeur;
+ 	let videoHauteur = containerHauteur;
+ 	if(videoHauteur<videoLargeur){
+ 		videoLargeur = window.ratioVideo*videoHauteur;
+ 		if(videoLargeur>containerLargeur)
+ 		{
+ 			videoLargeur= containerLargeur;
+ 			videoHauteur= videoLargeur/window.ratioVideo;
+ 		}
  	}
  	else{
- 		if(containerHauteur==containerLargeur){
- 			if(videoLargeur>videoHauteur){
- 			videoHauteur = videoHauteur*proportionX;
- 			videoLargeur = videoLargeur*proportionX;
- 			}
- 			else{
- 			videoHauteur = videoHauteur*proportionY;
- 			videoLargeur = videoLargeur*proportionY;
- 			}
+ 		videoHauteur=videoLargeur/window.ratioVideo;
+ 		if(videoHauteur>containerHauteur)
+ 		{
+ 			videoHauteur=containerHauteur;
+ 			videoLargeur=window.ratioVideo*videoHauteur;
  		}
- 		else if(containerLargeur<containerHauteur){
- 			videoHauteur = videoHauteur*proportionX;
- 			videoLargeur = videoLargeur*proportionX;
- 		}
- 		else{
- 			videoHauteur = videoHauteur*proportionY;
- 			videoLargeur = videoLargeur*proportionY;
- 		}
- 	} 
-
+ 	}
 
 	allvid.style.width = videoLargeur + 'px';
 	allvid.style.height = videoHauteur +'px';
 }
 
 openSizeVideo(){
+	let video = document.getElementById('video'+this.name);
+	let videoLargeur = video.getBoundingClientRect().width;
+ 	let videoHauteur = video.getBoundingClientRect().height;
+ 	window.ratioVideo = videoLargeur/videoHauteur;
+ 	console.log("X:"+videoLargeur+"  Y:"+videoHauteur+"  ratio:"+ratioVideo);
 	const self=this;
 	self.videoSize();
 	window.OkForResize=true;
@@ -399,6 +390,7 @@ niveauVolume(){
 mute(){
 	let video= document.getElementById('video'+this.name);
 	let sonButton= document.getElementById('sonButton'+this.name);
+	let barreSon= document.getElementById('barreSon'+this.name);
 	let sonIcon= document.getElementById('sonIcon'+this.name);
 	if(sonButton.className === 'sonButtonClass on'){ //si la classe de sonButton est on
 			video.volume=0; //prop : Get the value of a property for the first element in the set of matched elements or set one or more properties for every matched element.
@@ -461,7 +453,7 @@ fullScreen()
 		let allvid= document.getElementById('allvid'+this.name);
 		let fullScreenButton= document.getElementById('fullScreenButton'+this.name);
 		let fullScreenIcon= document.getElementById('fullScreenIcon'+this.name);
-		let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
+		let fullScreenButtonUnder= document.getElementById('fullScreenButtonUnder'+this.name);
 		let fullScreenIconUnder = document.getElementById('fullScreenIconUnder'+this.name);
 		if(fullScreenButton.className ==='fullScreenButtonClass close')
 		{
@@ -513,7 +505,3 @@ fullScreen()
 		}
 	}
 }
-
-
-const lecteur = new Lecteur({lienVideo:"myVideo.mp4"});
-lecteur.init();

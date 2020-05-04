@@ -33,7 +33,6 @@ video{
 	height:27px;
 	width:27px;
 	border-radius: 15px;
-	border-color: #73008C;
 	margin: 2px;
 	cursor: pointer;
 }
@@ -52,7 +51,6 @@ video{
 	height:26px;
 	width:26px;
 	border-radius: 13px;
-	border-color: #73008C;
 	cursor: pointer;
 }
 
@@ -68,8 +66,7 @@ video{
 	outline: solid;
 	border-radius:2rem;
 	color: transparent;                  
-	opacity: .8;
-	background: linear-gradient(to right, grey,#8A00A8);            
+	opacity: .8;           
 	box-sizing: content-box;       
 	cursor: pointer;
 }
