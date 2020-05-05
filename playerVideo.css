@@ -1,0 +1,170 @@
+body{              
+	width:100vw;
+	height: 100vh;
+}
+
+.containerClass
+{
+	display:flex;
+}
+
+.allvidClass{
+	background-color: black;
+	
+}
+video{
+	width: 100%;
+	height: 100%;
+}
+.allvidClass:hover .controleClass{
+	visibility: visible;
+}
+
+.controleClass{
+	visibility: hidden;
+	height:40px;
+	min-width: 50px;
+}
+
+.playPauseButtonClass{
+	left:4px;
+	top: 6px;
+	background-color:rgba(30,30,30,0.3);
+	height:27px;
+	width:27px;
+	border-radius: 15px;
+	margin: 2px;
+	cursor: pointer;
+}
+
+.videoTimeClass{
+	top: 6px;
+	color:white;
+	width:80px;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size:0.7rem;
+}	
+.sonButtonClass{
+	top: 6px;
+	background-color:rgba(30,30,66,0.3);
+	height:26px;
+	width:26px;
+	border-radius: 13px;
+	cursor: pointer;
+}
+
+.barreSonClass{
+	top: 3px;
+	width:60px;
+	-webkit-appearance: none;     
+	padding: 0;                   
+	height: 4px;
+	width: 40px;
+	border-radius:1px;
+	font: inherit;                
+	outline: solid;
+	border-radius:2rem;
+	color: transparent;                  
+	opacity: .8;           
+	box-sizing: content-box;       
+	cursor: pointer;
+}
+
+.barreSonClass::-webkit-slider-thumb{
+	-webkit-appearance:none;
+	background: rgb(30,30, 66);
+	border: 1px solid silver;
+	border-radius: 6px; 
+	height:12px;
+	width:12px;
+}
+.barreSonClass::-moz-range-thumb {
+	background: rgb(30,30, 66);
+	border: 1px solid silver;
+	border-radius: 6px; 
+	height:12px;
+	width:12px;
+}
+.barreSonClass::-ms-thumb {
+	background: rgb(30,30, 66);
+	border: 1px solid silver;
+	border-radius: 6px; 
+	height:12px;
+	width:12px;
+}
+
+.fullScreenButtonClass{
+	top: 13px;
+	right:6px;
+	background-color:transparent;
+	height:25px;
+	width:25px;	
+	border:none;
+	cursor: pointer;
+}
+.fullScreenButtonClass:hover i{
+font-size:1.3em;
+}
+
+.barreProgressionClass{
+	width:96%;
+	height:3px;
+	margin-right: 2%;
+	margin-left: 2%;
+	background-color: silver;
+	border-radius: 1px;
+	cursor: pointer;
+}
+
+.progressionClass{
+	height:3px;
+	width: 0%;
+	border-radius: 1px 0px 0px 1px;
+	z-index: 1;
+}
+
+
+.iconPlayPauseClass{
+	color:white;
+	padding:5%;
+}
+
+.sonIconClass{
+	font-size: 15px;
+	color:white;
+}
+.fullScreenIconClass{
+	color:white;
+}
+
+.fullScreenButtonUnderClass
+{
+	top:6px;
+	right: 6px;
+	background-color:transparent;
+	visibility:hidden;
+	height:25px;
+	width:25px;
+	border:none;
+	cursor:pointer;
+}
+
+.fullScreenIconUnderClass{
+	color:white;
+}
+
+.containerClass{
+	-webkit-user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none;
+}
+
+.ballProgressClass{	
+	border-radius: 4px;
+	height:9px;
+	width:9px;
+	margin:0px;
+	padding:0px;
+}
