@@ -1,7 +1,7 @@
 Player Video in javascript, OOP version.
 
 This code use font awesome 4 and need to have 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+\<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">\
 in the head of html page.
 
 This code in javascript is a proposal for a customizable player video. It works with the creation of a new player and execute it with the function init().
