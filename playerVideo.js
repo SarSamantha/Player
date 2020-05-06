@@ -33,6 +33,7 @@ init(){
 
 	let video = document.createElement('video');
 	video.setAttribute("id","video"+this.name);
+	video.setAttribute("tabindex","0");
 	video.src = this.lienVideo; //LIEN
 	video.style.height="100%";
 	video.style.width="100%";
@@ -155,6 +156,7 @@ init(){
 
 	const self = this;
 	window["OkForResize"+this.name]= false;
+	const name=this.name;
 	window.addEventListener('load', function(){
 		self.openSizeVideo();
 		self.timer();
@@ -166,16 +168,18 @@ init(){
 
 	playPauseButton.addEventListener('click',function(){
 		self.playAndPause();
+		window.focus = document.getElementById("video"+name).focus();
 	});
 	
 	video.addEventListener('click',function(){
 		self.playAndPause();
+		window.focus = document.getElementById("video"+name).focus();
 	});
 	
-	document.addEventListener('keyup',function(e){
+	video.addEventListener('keyup',function(e){
 		if(e.which == 32)
 			{
-				self.playAndPause();
+					self.playAndPause();
 			}
 	});
 	
@@ -212,7 +216,6 @@ init(){
 		self.fullScreen();
 	});
 
-	const name=this.name;
 	window["appuyer"+name] = false;
 	barreProgression.addEventListener('mousedown', function(){
 		window["appuyer"+name] = true;
