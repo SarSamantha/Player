@@ -14,15 +14,18 @@ constructor(option){
 	this.lienVideo = option.lienVideo;
 }
 
+
+/*-----------------------------------------function execute which be called to create a new player----------------------------------------------------------*/
 init(){
-	let container = document.createElement('div'); 
+	//first of all, there is the creation of elements in the DOM
+	let container = document.createElement('div');
 	container.setAttribute("id", "container"+this.name);
 	container.classList.add("containerClass");
-	container.style.position = this.position; //POSITION
-	container.style.width= this.width; //WIDTH
-	container.style.height= this.height; //HEIGHT
-	container.style.top=this.top; //TOP
-	container.style.left=this.left; //LEFT
+	container.style.position = this.position; 
+	container.style.width= this.width; 
+	container.style.height= this.height; 
+	container.style.top=this.top; 
+	container.style.left=this.left; 
 	document.querySelector(this.parent).appendChild(container);
 
 	let allvid = document.createElement('div'); 
@@ -34,16 +37,16 @@ init(){
 	let video = document.createElement('video');
 	video.setAttribute("id","video"+this.name);
 	video.setAttribute("tabindex","0");
-	video.src = this.lienVideo; //LIEN
+	video.src = this.lienVideo; 
 	video.style.height="100%";
 	video.style.width="100%";
-	video.style.volume=this.volume; //VOLUME
+	video.style.volume=this.volume; 
 	document.getElementById('allvid'+this.name).appendChild(video);
 
 	let controle = document.createElement('div');
 	controle.setAttribute("id","controle"+this.name);
 	controle.classList.add("controleClass");
-	controle.style.backgroundColor=this.controleColor; //COLOR CONTROLE
+	controle.style.backgroundColor=this.controleColor; 
 	controle.style.position="relative";
 	document.getElementById('allvid'+this.name).appendChild(controle);
 	controle.style.marginTop="-"+(controle.getBoundingClientRect().height + 4)+ "px";
@@ -52,7 +55,7 @@ init(){
 	bleu.setAttribute("id","bleu"+this.name);
 	bleu.style.width="100%";
 	bleu.style.height="4px";
-	bleu.style.backgroundColor=this.controleColor; // COLOR CONTROLE
+	bleu.style.backgroundColor=this.controleColor; 
 	document.getElementById('controle'+this.name).appendChild(bleu);
 
 	let barreProgression = document.createElement('div');
@@ -67,7 +70,7 @@ init(){
 	progression.classList.add("progressionClass");
 	progression.style.position ="absolute";
 	progression.style.top="0px";
-	progression.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
+	progression.style.backgroundColor=this.progressionColor; 
 	document.getElementById('barreProgression'+this.name).appendChild(progression);
 
 	let ballProgress = document.createElement('div');
@@ -76,7 +79,7 @@ init(){
 	ballProgress.style.position ="absolute";
 	ballProgress.style.top="-3px";
 	ballProgress.style.right="-4px";
-	ballProgress.style.backgroundColor=this.progressionColor; //COLOR PROGRESSION
+	ballProgress.style.backgroundColor=this.progressionColor; 
 	document.getElementById('progression'+this.name).appendChild(ballProgress);
 
 	let buttons = document.createElement('div');
@@ -154,26 +157,61 @@ init(){
 	fullScreenIconUnder.classList.add("fa","fa-expand");
 	document.getElementById('fullScreenButtonUnder'+this.name).appendChild(fullScreenIconUnder);
 
+	let sonButtonUnder = document.createElement('button');
+	sonButtonUnder.setAttribute("id","sonButtonUnder"+this.name);
+	sonButtonUnder.classList.add("sonButtonUnderClass", "on");
+	sonButtonUnder.style.position="absolute";
+	sonButtonUnder.style.borderColor = this.buttonColor;
+	document.getElementById('allvid'+this.name).appendChild(sonButtonUnder);
+
+	let sonIconUnder = document.createElement('i');
+	sonIconUnder.setAttribute("id","sonIconUnder"+this.name);
+	sonIconUnder.classList.add("sonIconUnderClass");
+	sonIconUnder.classList.add("fa","fa-volume-off");
+	document.getElementById('sonButtonUnder'+this.name).appendChild(sonIconUnder);
+	/*
+	which corresponds to (without class for more readability):
+		<div id="container">
+			<div id="allvid">
+				<video id="video" src="this.lienVideo"></video>
+				<div id="controle">
+					<div id="bleu"></div>
+					<div id="barreProgression">
+						<div id="progression"><div id="ballProgress"></div></div>
+					</div>
+					<div id="buttons">
+						<button id="playPauseButton"><i id="iconPlayPause"></i></button>
+						<span id="videoTime"></span>
+						<button id="sonButton"><i id='sonIcon'></i></button>
+						<input type="range" id="barreSon" min ="0" max="100" value="20" step="1"></input>
+						<button id="fullScreenButton"><i id="fullScreenIcon"></i></button>
+					</div>
+				</div>
+				<button id="fullScreenButtonUnder" ><i id="fullScreenIconUnder"></i></button>
+				<button id="sonButtonUnder"><i id='sonIconUnder'></i></button>
+			</div>
+		</div>
+	*/
+
+	//then the function to call depending of the actions of the users.
 	const self = this;
 	window["OkForResize"+this.name]= false;
 	const name=this.name;
-	window.addEventListener('load', function(){
+	window.addEventListener('load', function(){ //on load, calcul of the size and of the time of video
 		self.openSizeVideo();
 		self.timer();
 	});
 	
-	window.addEventListener('resize',function(){
+	window.addEventListener('resize',function(){ //on resize
 			self.resizeVideo();
 	});
 
-	playPauseButton.addEventListener('click',function(){
+	playPauseButton.addEventListener('click',function(){ //for play and pause
 		self.playAndPause();
-		window.focus = document.getElementById("video"+name).focus();
 	});
 	
 	video.addEventListener('click',function(){
 		self.playAndPause();
-		window.focus = document.getElementById("video"+name).focus();
 	});
 	
 	video.addEventListener('keyup',function(e){
@@ -183,24 +221,28 @@ init(){
 			}
 	});
 	
-	video.addEventListener('timeupdate',function(){
+	video.addEventListener('timeupdate',function(){ // for passage of time on progress bar and on the timer
 		self.timeFlow();
 		self.timer();
 	});
 
-	barreProgression.addEventListener('click',function(e){
+	barreProgression.addEventListener('click',function(e){ //when the user clicks on the progress bar
 		self.clickOnBar(e);
 	});
 
-	barreSon.addEventListener('input', function(){
+	barreSon.addEventListener('input', function(){ //when the user moves the volume bar
 		self.niveauVolume();
 	});
 
-	sonButton.addEventListener('click',function(){
+	sonButton.addEventListener('click',function(){ //when he clicks on the muteButton
 		self.mute();
 	});
 
-	document.addEventListener('mousemove',function(e){
+	sonButtonUnder.addEventListener('click',function(){ 
+		self.mute();
+	});
+
+	document.addEventListener('mousemove',function(e){ // disappearing and appearing of control bar
 		self.disparitionControle(e);
 	});
 
@@ -208,16 +250,16 @@ init(){
 		self.apparitionControle();
 	});
 
-	fullScreenButton.addEventListener('click',function(){
+	fullScreenButton.addEventListener('click',function(){ //fullScreen when  there is control bar (width of video>215px)
 		self.fullScreen();
 	});
 
-	fullScreenButtonUnder.addEventListener('click',function(){
+	fullScreenButtonUnder.addEventListener('click',function(){ //fullScreen when there is not control ar (width of video<215px)
 		self.fullScreen();
 	});
 
 	window["appuyer"+name] = false;
-	barreProgression.addEventListener('mousedown', function(){
+	barreProgression.addEventListener('mousedown', function(){ //for the drag of the ballProgress on the progress bar.
 		window["appuyer"+name] = true;
 	});	
 
@@ -234,6 +276,7 @@ init(){
 		});
 }
 
+/*--------------------------------------------------------resizing function----------------------------------------------------------------*/
 videoSize(){
  	let allvid=document.getElementById('allvid'+this.name);
  	let container = document.getElementById('container'+this.name);
@@ -262,6 +305,7 @@ videoSize(){
 	allvid.style.height = videoHauteur +'px';
 }
 
+/*----------------------------------------------------resizing when the window is opening---------------------------------------------------*/
 openSizeVideo(){
 	let video = document.getElementById('video'+this.name);
 	let videoLargeur = video.getBoundingClientRect().width;
@@ -272,13 +316,15 @@ openSizeVideo(){
 	window["OkForResize"+this.name]=true;
 }
 
+/*---------------------------------resizing when the width or height of the window are modified-----------------------------------------------*/
 resizeVideo(){	
 	const self=this;
-	if(window["OkForResize"+this.name]){
+	if(window["OkForResize"+this.name]){ //need to be true, because at the opening of a window in fullscreen, there is a resizing, so the resizing function would be called, but the dimensions of the video would be wrong.
 		self.videoSize();
 	}
 }
 
+/*------------------------------------------------------play or pause the video---------------------------------------------------------*/
 playAndPause(){
 	let video=document.getElementById('video'+this.name);
 	let iconPlayPause=document.getElementById('iconPlayPause'+this.name);
@@ -294,6 +340,7 @@ playAndPause(){
 	}
 }
 
+/*-----------------------------------------progress of the progress bar when the video is played-------------------------------------------------*/
 timeFlow(){
 	let video= document.getElementById('video'+this.name);
 	let barreProgression= document.getElementById('barreProgression'+this.name);
@@ -308,20 +355,22 @@ timeFlow(){
 		}
 }
 
+/*------------------------------------------click on the progress bar for move forward or backward in time-------------------------------------------------*/
 clickOnBar(e){
 	let video=document.getElementById('video'+this.name);
 	let barreProgression=document.getElementById('barreProgression'+this.name);
 	let progression=document.getElementById('progression'+this.name);
-	let positionXLeftBarre = barreProgression.getBoundingClientRect().left; //position bord gauche barre progression
-	let positionXCursor = e.pageX; // position curseur dans la page
-	let cursorOnBarre= positionXCursor - positionXLeftBarre; // position X curseur par rapport au bord gauche de la barre
-	let tailleBarre= barreProgression.offsetWidth; // taille complete de la barre
-	let percent = (cursorOnBarre*100)/tailleBarre; //pourcentage de l'endroit ou le curseur se trouve
-	let tempsVideo= (percent*video.duration)/100; // pourcentage du temps de la video par rapport au curseur
-	video.currentTime = tempsVideo; //placement au bon moment dans la video
-	progression.style.width = percent +"%";// placement de la barre de progression par rapport au pourcentage
+	let positionXLeftBarre = barreProgression.getBoundingClientRect().left; 
+	let positionXCursor = e.pageX; 
+	let cursorOnBarre= positionXCursor - positionXLeftBarre; 
+	let tailleBarre= barreProgression.offsetWidth; 
+	let percent = (cursorOnBarre*100)/tailleBarre; 
+	let tempsVideo= (percent*video.duration)/100; 
+	video.currentTime = tempsVideo; 
+	progression.style.width = percent +"%";
 }
 
+/*------------------------------------------drag on the progress bar for move forward or backward in time-------------------------------------------------*/
 drag(e){
 	let video=document.getElementById('video'+this.name);
 	let barreProgression=document.getElementById('barreProgression'+this.name);
@@ -339,7 +388,8 @@ drag(e){
 			progression.style.width = "100%";
 		}
 }
-	
+
+/*------------------------------------------passage of time (00:00 if the video <1h and 00:00:00 if video>1h ------------------------------------------------*/
 timer(){
 	let video= document.getElementById('video'+this.name);
 	let videoTime =document.getElementById("videoTime"+this.name);
@@ -373,7 +423,6 @@ timer(){
 		{
 			currentSec = "0"+ currentSec;
 		}
-
 let current;
 let duration;
 	if(video.duration>=3600){
@@ -388,6 +437,7 @@ let duration;
 	videoTime.textContent=current +"/" + duration;
 }
 
+/*------------------------------------------volume level with the volume bar <input type="range">-------------------------------------------------*/
 niveauVolume(){
 	let video= document.getElementById('video'+this.name);
 	let barreSon= document.getElementById('barreSon'+this.name);
@@ -395,16 +445,22 @@ niveauVolume(){
 	video.volume = niveauSon/100;
 }
 
+/*-----------------------------------------------------------option mute------------------------------------------------------------------------*/
 mute(){
 	let video= document.getElementById('video'+this.name);
 	let sonButton= document.getElementById('sonButton'+this.name);
 	let barreSon= document.getElementById('barreSon'+this.name);
 	let sonIcon= document.getElementById('sonIcon'+this.name);
-	if(sonButton.className === 'sonButtonClass on'){ //si la classe de sonButton est on
-			video.volume=0; //prop : Get the value of a property for the first element in the set of matched elements or set one or more properties for every matched element.
+	let sonButtonUnder= document.getElementById('sonButtonUnder'+this.name);
+	let sonIconUnder= document.getElementById('sonIconUnder'+this.name);
+	if(sonButton.className === 'sonButtonClass on'){ 
+			video.volume=0; 
 			sonIcon.style.color ="red";
 			sonButton.classList.remove("on");
 			sonButton.classList.add("off");
+			sonIconUnder.style.color ="red";
+			sonButtonUnder.classList.remove("on");
+			sonButtonUnder.classList.add("off");
 		}
 		else if(sonButton.className === 'sonButtonClass off'){
 			let niveauSon = barreSon.value;
@@ -412,13 +468,18 @@ mute(){
 			sonIcon.style.color ="white";
 			sonButton.classList.remove("off");
 			sonButton.classList.add("on");
+			sonIconUnder.style.color ="white";
+			sonButtonUnder.classList.remove("off");
+			sonButtonUnder.classList.add("on");
 		}
 }
 
+/*--------------------------------------control bar (disappears when the mouse is not moving, or is out of the video)-----------------------------------*/
 disparitionControle(e){
 let allvid= document.getElementById('allvid'+this.name);
 let controle= document.getElementById('controle'+this.name);
 let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
+let sonButtonUnder= document.getElementById('sonButtonUnder'+this.name);
 let Xcursor = e.clientX;
 let Ycursor = e.clientY;
 let XscreenLeft = allvid.getBoundingClientRect().left; 
@@ -429,33 +490,39 @@ if((allvid.getBoundingClientRect().width<=215) && ((Xcursor>XscreenLeft && Xcurs
 	{
 		controle.style.visibility="hidden";
 		fullScreenButtonUnder.style.visibility="visible";
+		sonButtonUnder.style.visibility="visible";
 		window["cache"+this.name] = setTimeout(function(){
-			fullScreenButtonUnder.style.visibility='hidden'}, 3500);
-	}
+			fullScreenButtonUnder.style.visibility='hidden';
+			sonButtonUnder.style.visibility='hidden'}, 3500);
+	} //if the width of the video is <215px, the control bar disappears, only a fullscreen button remains.
 else if((Xcursor>XscreenLeft && Xcursor<XscreenRight) && (Ycursor>YscreenTop && Ycursor<YscreenBottom)) 
 	{
 			controle.style.visibility = 'visible';
 			window["cacher"+this.name] = setTimeout(function(){
 			controle.style.visibility='hidden'; 
 			allvid.style.cursor='none'}, 3500);
-	}
+	} // When the mouse is hover the video, control bar disappears after 3,5sec of inactivity.
 else
 	{
 	controle.style.visibility='hidden'; 
 	fullScreenButtonUnder.style.visibility="hidden";
-	}
+	sonButtonUnder.style.visibility="hidden";
+	} //if the mouse is out of the video, the control bar disappears.
 }
 
+/*--------------------------------------control bar (appears when the mouse is hover and moving)-----------------------------------*/
 apparitionControle(){
 	let allvid= document.getElementById('allvid'+this.name);
 	let controle= document.getElementById('controle'+this.name);
 	let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
+	let sonButtonUnder= document.getElementById('sonButtonUnder'+this.name);
 	clearTimeout(window["cacher"+this.name]);
 	clearTimeout(window["cache"+this.name]);
 	controle.style.visibility='visible'; 
 	allvid.style.cursor='default';
 }
 
+/*---------------------------------------------------------fullscreen function.-------------------------------------------------*/
 fullScreen()
 	{
 		let allvid= document.getElementById('allvid'+this.name);
