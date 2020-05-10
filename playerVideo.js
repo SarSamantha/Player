@@ -160,7 +160,7 @@ init(){
 	let sonButtonUnder = document.createElement('button');
 	sonButtonUnder.setAttribute("id","sonButtonUnder"+this.name);
 	sonButtonUnder.classList.add("sonButtonUnderClass", "on");
-	sonButtonUnder.style.position="absolute";
+	sonButtonUnder.style.position="relative";
 	sonButtonUnder.style.borderColor = this.buttonColor;
 	document.getElementById('allvid'+this.name).appendChild(sonButtonUnder);
 
@@ -194,9 +194,9 @@ init(){
 	*/
 
 	//then the function to call depending of the actions of the users.
-	const self = this;
-	window["OkForResize"+this.name]= false;
-	const name=this.name;
+	this.OkForResize= false;
+	this.appuyer = false;
+ 	const self = this;
 	window.addEventListener('load', function(){ //on load, calcul of the size and of the time of video
 		self.openSizeVideo();
 		self.timer();
@@ -258,26 +258,26 @@ init(){
 		self.fullScreen();
 	});
 
-	window["appuyer"+name] = false;
 	barreProgression.addEventListener('mousedown', function(){ //for the drag of the ballProgress on the progress bar.
-		window["appuyer"+name] = true;
+		self.appuyer = true;
 	});	
 
 	document.addEventListener('mousemove', function(e){
-			if(window["appuyer"+name]===true){
+			if(self.appuyer){
 				self.drag(e);
 			}
 		});
 
 	document.addEventListener('mouseup', function(e){
-			if(window["appuyer"+name] === true){
-				window["appuyer"+name] = false;
+			if(self.appuyer){
+				self.appuyer = false;
 			}
 		});
 }
 
 /*--------------------------------------------------------resizing function----------------------------------------------------------------*/
 videoSize(){
+	const self = this;
  	let allvid=document.getElementById('allvid'+this.name);
  	let container = document.getElementById('container'+this.name);
  	let containerHauteur = container.getBoundingClientRect().height;
@@ -285,19 +285,19 @@ videoSize(){
  	let videoLargeur = containerLargeur;
  	let videoHauteur = containerHauteur;
  	if(videoHauteur<videoLargeur){
- 		videoLargeur = window["ratioVideo"+this.name]*videoHauteur;
+ 		videoLargeur = self.ratioVideo*videoHauteur;
  		if(videoLargeur>containerLargeur)
  		{
  			videoLargeur= containerLargeur;
- 			videoHauteur= videoLargeur/window["ratioVideo"+this.name];
+ 			videoHauteur= videoLargeur/self.ratioVideo;
  		}
  	}
  	else{
- 		videoHauteur=videoLargeur/window["ratioVideo"+this.name];
+ 		videoHauteur=videoLargeur/self.ratioVideo;
  		if(videoHauteur>containerHauteur)
  		{
  			videoHauteur=containerHauteur;
- 			videoLargeur=window["ratioVideo"+this.name]*videoHauteur;
+ 			videoLargeur=self.ratioVideo*videoHauteur;
  		}
  	}
 
@@ -310,16 +310,16 @@ openSizeVideo(){
 	let video = document.getElementById('video'+this.name);
 	let videoLargeur = video.getBoundingClientRect().width;
  	let videoHauteur = video.getBoundingClientRect().height;
- 	window["ratioVideo"+this.name] = videoLargeur/videoHauteur;
-	const self=this;
-	self.videoSize();
-	window["OkForResize"+this.name]=true;
+ 	const self=this;
+ 	self.ratioVideo = videoLargeur/videoHauteur;
+ 	self.videoSize();
+	self.OkForResize=true;
 }
 
 /*---------------------------------resizing when the width or height of the window are modified-----------------------------------------------*/
 resizeVideo(){	
 	const self=this;
-	if(window["OkForResize"+this.name]){ //need to be true, because at the opening of a window in fullscreen, there is a resizing, so the resizing function would be called, but the dimensions of the video would be wrong.
+	if(self.OkForResize){ //need to be true, because at the opening of a window in fullscreen, there is a resizing, so the resizing function would be called, but the dimensions of the video would be wrong.
 		self.videoSize();
 	}
 }
@@ -451,7 +451,7 @@ mute(){
 	let sonButton= document.getElementById('sonButton'+this.name);
 	let barreSon= document.getElementById('barreSon'+this.name);
 	let sonIcon= document.getElementById('sonIcon'+this.name);
-	let sonButtonUnder= document.getElementById('sonButtonUnder'+this.name);
+	let sonButtonUnder= document.getElementById("sonButtonUnder"+this.name);
 	let sonIconUnder= document.getElementById('sonIconUnder'+this.name);
 	if(sonButton.className === 'sonButtonClass on'){ 
 			video.volume=0; 
@@ -479,26 +479,27 @@ disparitionControle(e){
 let allvid= document.getElementById('allvid'+this.name);
 let controle= document.getElementById('controle'+this.name);
 let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
-let sonButtonUnder= document.getElementById('sonButtonUnder'+this.name);
+let sonButtonUnder= document.getElementById("sonButtonUnder"+this.name);
 let Xcursor = e.clientX;
 let Ycursor = e.clientY;
 let XscreenLeft = allvid.getBoundingClientRect().left; 
 let XscreenRight = XscreenLeft + allvid.getBoundingClientRect().width;
 let YscreenTop = allvid.getBoundingClientRect().top;
 let YscreenBottom = YscreenTop + allvid.getBoundingClientRect().height;
+const self = this;
 if((allvid.getBoundingClientRect().width<=215) && ((Xcursor>XscreenLeft && Xcursor<XscreenRight) && (Ycursor>YscreenTop && Ycursor<YscreenBottom)))
 	{
 		controle.style.visibility="hidden";
 		fullScreenButtonUnder.style.visibility="visible";
 		sonButtonUnder.style.visibility="visible";
-		window["cache"+this.name] = setTimeout(function(){
+		self.cache = setTimeout(function(){
 			fullScreenButtonUnder.style.visibility='hidden';
 			sonButtonUnder.style.visibility='hidden'}, 3500);
 	} //if the width of the video is <215px, the control bar disappears, only a fullscreen button remains.
 else if((Xcursor>XscreenLeft && Xcursor<XscreenRight) && (Ycursor>YscreenTop && Ycursor<YscreenBottom)) 
 	{
 			controle.style.visibility = 'visible';
-			window["cacher"+this.name] = setTimeout(function(){
+			self.cacher = setTimeout(function(){
 			controle.style.visibility='hidden'; 
 			allvid.style.cursor='none'}, 3500);
 	} // When the mouse is hover the video, control bar disappears after 3,5sec of inactivity.
@@ -515,9 +516,10 @@ apparitionControle(){
 	let allvid= document.getElementById('allvid'+this.name);
 	let controle= document.getElementById('controle'+this.name);
 	let fullScreenButtonUnder = document.getElementById('fullScreenButtonUnder'+this.name);
-	let sonButtonUnder= document.getElementById('sonButtonUnder'+this.name);
-	clearTimeout(window["cacher"+this.name]);
-	clearTimeout(window["cache"+this.name]);
+	let sonButtonUnder= document.getElementById("sonButtonUnder"+this.name);
+	const self = this;
+	clearTimeout(self.cacher);
+	clearTimeout(self.cache);
 	controle.style.visibility='visible'; 
 	allvid.style.cursor='default';
 }
@@ -530,9 +532,10 @@ fullScreen()
 		let fullScreenIcon= document.getElementById('fullScreenIcon'+this.name);
 		let fullScreenButtonUnder= document.getElementById('fullScreenButtonUnder'+this.name);
 		let fullScreenIconUnder = document.getElementById('fullScreenIconUnder'+this.name);
+		const self = this;
 		if(fullScreenButton.className ==='fullScreenButtonClass close')
 		{
-			window["normalSize"+this.name] = allvid.getBoundingClientRect();
+			self.normalSize = allvid.getBoundingClientRect();
 			fullScreenIcon.classList.remove("fa","fa-expand");
 			fullScreenIcon.classList.add("fa","fa-compress");
 			fullScreenButton.classList.remove("close");
@@ -555,8 +558,8 @@ fullScreen()
 			}
 		}
 		else if(fullScreenButton.className ==='fullScreenButtonClass open'){
-			allvid.style.width = window["normalSize"+this.name].width + 'px';
-			allvid.style.height = window["normalSize"+this.name].height + 'px';
+			allvid.style.width = self.normalSize.width + 'px';
+			allvid.style.height = self.normalSize.height + 'px';
 			fullScreenIcon.classList.remove("fa","fa-compress");
 			fullScreenIcon.classList.add("fa","fa-expand");
 			fullScreenButton.classList.remove("open");
